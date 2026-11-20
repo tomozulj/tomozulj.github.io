@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Product Passport · EV-0001</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+<style>
+  :root {
+    --base-100: oklch(98.5% 0.008 250);
+    --base-200: oklch(95.5% 0.012 250);
+    --base-300: oklch(90.5% 0.016 250);
+    --ink: oklch(30% 0.035 258);
+    --primary: oklch(55% 0.19 255);
+    --primary-ink: oklch(99% 0.01 255);
+    --success: oklch(64% 0.16 155);
+    --success-ink: oklch(99% 0.01 155);
+    --error: oklch(62% 0.21 25);
+    --muted: color-mix(in oklab, var(--ink) 60%, transparent);
+    --faint: color-mix(in oklab, var(--ink) 50%, transparent);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--base-200); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .ms { font-family: "Material Symbols Outlined"; font-weight: normal; font-style: normal; display: inline-block; width: 1em; height: 1em; line-height: 1; overflow: hidden; white-space: nowrap; font-feature-settings: "liga"; -webkit-font-feature-settings: "liga"; vertical-align: middle; }
+  header { background: var(--primary); color: var(--primary-ink); }
+  .bar { max-width: 64rem; margin: 0 auto; padding: .75rem 1rem; display: flex; align-items: center; gap: .5rem; }
+  .bar .t { font-size: .875rem; font-weight: 500; letter-spacing: .025em; }
+  .pill { margin-left: auto; display: inline-flex; align-items: center; gap: .25rem; font-size: .75rem; border: 1px solid color-mix(in oklab, var(--primary-ink) 40%, transparent); border-radius: 999px; padding: .1rem .55rem; }
+  main { max-width: 64rem; margin: 0 auto; padding: 1rem 1rem 2.5rem; }
+  .card { background: var(--base-100); border-radius: 1rem; box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+  .head { padding: 1.25rem; }
+  .row { display: flex; gap: 1rem; align-items: flex-start; }
+  .logo { flex: none; width: 3.5rem; height: 3.5rem; border-radius: 1rem; display: grid; place-items: center; background: color-mix(in oklab, var(--primary) 10%, transparent); color: var(--primary); font-size: 1.9rem; }
+  h1 { margin: 0; font-size: 1.125rem; line-height: 1.25; font-weight: 600; }
+  .serial { margin: .125rem 0 0; font: .875rem ui-monospace, SFMono-Regular, Menlo, monospace; color: color-mix(in oklab, var(--ink) 70%, transparent); word-break: break-all; }
+  .badge { display: inline-flex; align-items: center; gap: .25rem; margin-top: .5rem; font-size: .8rem; line-height: 1; padding: .35rem .6rem; border-radius: 999px; background: var(--success); color: var(--success-ink); white-space: nowrap; }
+  .badge.invalid { background: var(--error); }
+  .badge .ms { font-size: .9rem; }
+  dl { margin: 0; }
+  .meta { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--base-200); display: grid; gap: .75rem; font-size: .875rem; }
+  .meta dt, .share dt { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--faint); }
+  .meta dd { margin: 0; font-weight: 500; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .layout { margin-top: 1rem; display: grid; gap: 1rem; }
+  .groups { display: grid; gap: 1rem; align-content: start; }
+  .grp h2, details summary { display: flex; align-items: center; gap: .5rem; margin: 0; padding: .75rem 1.25rem; font-size: .875rem; font-weight: 600; }
+  .grp h2 { border-bottom: 1px solid var(--base-200); }
+  .grp h2 .ms, summary .ms { color: var(--primary); font-size: 1.2rem; }
+  details summary { cursor: pointer; list-style: none; }
+  details summary::-webkit-details-marker { display: none; }
+  .kv { padding: .75rem 1.25rem; display: flex; flex-direction: column; gap: .125rem; border-top: 1px solid var(--base-200); }
+  .kv:first-child { border-top: 0; }
+  .kv .k { font-size: .875rem; color: var(--muted); }
+  .kv .v { font-size: .875rem; font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
+  .kv .u { font-weight: 400; color: var(--muted); }
+  .kv .n { display: block; margin-top: .125rem; font-size: .75rem; font-weight: 400; color: var(--faint); }
+  .kv .f { display: block; margin-top: .125rem; font-size: .75rem; font-weight: 400; color: var(--faint); word-break: break-all; }
+  .det { padding: .75rem 1.25rem; font-size: .75rem; word-break: break-all; border-top: 1px solid var(--base-200); }
+  details[open] summary { border-bottom: 1px solid var(--base-200); }
+  a { color: var(--primary); }
+  .share { padding: 1.25rem; }
+  .share h2 { display: flex; align-items: center; gap: .5rem; margin: 0 0 .75rem; font-size: .875rem; font-weight: 600; }
+  .share h2 .ms { color: var(--primary); font-size: 1.2rem; }
+  .qr { display: flex; justify-content: center; }
+  .qr .box { background: #fff; border: 1px solid var(--base-300); border-radius: 1rem; padding: 1rem; line-height: 0; }
+  .share dl { margin-top: 1rem; font-size: .75rem; display: grid; gap: .5rem; }
+  .share dd { margin: 0; word-break: break-all; }
+  .share dd.sub { color: var(--faint); }
+  .btn { display: flex; align-items: center; justify-content: center; gap: .25rem; margin-top: 1rem; padding: .45rem .75rem; border: 1px solid var(--primary); border-radius: .625rem; font-size: .8rem; text-decoration: none; color: var(--primary); }
+  .foot { margin-top: 1.5rem; text-align: center; font-size: .75rem; color: var(--faint); }
+  .demo { margin-top: .5rem; }
+  @media (min-width: 640px) {
+    h1 { font-size: 1.5rem; }
+    .meta { grid-template-columns: repeat(3, 1fr); }
+    .kv { flex-direction: row; justify-content: space-between; align-items: baseline; gap: 1.5rem; }
+    .kv .k { flex: none; }
+    .kv .v { max-width: 65%; text-align: right; }
+  }
+  @media (min-width: 1024px) {
+    .layout { grid-template-columns: 2fr 1fr; }
+    .share { position: sticky; top: 1rem; }
+  }
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <span class="ms" aria-hidden="true">qr_code_2</span>
+  <span class="t">Digital Product Passport</span>
+  <span class="pill"><span class="ms" aria-hidden="true" style="font-size:.85rem">lock_open</span>Public view</span>
+</div></header>
+
+<main id="app" aria-live="polite"></main>
+
+<script id="dpp-data" type="application/json">{"upi":"EV-0001","dppId":"urn:dpp:passport:426b27ea-b084-4239-9994-461a9a1a6f6d","dppIdShort":"urn:dpp:passport:426b27ea…","title":"Electric vehicle battery","serial":"EX-HV800-92","status":"valid","statusLabel":"Valid","operator":"Example Energy","operatorLabel":"Manufacturer","lastUpdated":"2026-11-19T07:44:33.833248Z","groups":[{"id":"identity","title":"Identity","icon":"badge","rows":[{"key":"granularity","label":"Granularity","value":"Item","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"batteryIdentification.productNumber","label":"Product number","value":"EX-HV800-92","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"uniqueProductIdentifier","label":"Unique product identifier","value":"EV-0001","unit":null,"href":null,"linkText":null,"note":null,"fullValue":"https://dpp.example.test/p/EV-0001"}]},{"id":"manufacturer","title":"Manufacturer & production","icon":"factory","rows":[{"key":"manufacturingDate","label":"Manufacturing date","value":"Sep 2026","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"manufacturingPlace.manufacturingCity","label":"Manufacturing city","value":"Example City","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"manufacturingPlace.manufacturingCountry","label":"Manufacturing country","value":"Croatia (HRV)","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"manufacturerPostalAddress","label":"Manufacturer postal address","value":"1 Example Street, 00000 Example City, Croatia","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"manufacturerContactDetails.manufacturerWebsite","label":"Manufacturer website","value":"https://energy.example.test/contact","unit":null,"href":"https://energy.example.test/contact","linkText":"energy.example.test/contact","note":null,"fullValue":null}]},{"id":"technical","title":"Technical & performance","icon":"battery_charging_full","rows":[{"key":"powerLimit[0]","label":"Power limit","value":"250,000","unit":"W (at −20 to 45 °C)","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"batteryWeight","label":"Battery weight","value":"486","unit":"kg","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"maximumVoltage","label":"Maximum voltage","value":"806","unit":"V (at 20–30 °C)","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"minimalVoltage","label":"Minimal voltage","value":"576","unit":"V (at 20–30 °C)","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"nominalVoltage","label":"Nominal voltage","value":"710","unit":"V (at 20–30 °C)","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"batteryCapacity","label":"Battery capacity","value":"130","unit":"Ah","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"batteryCategory","label":"Battery category","value":"Electric vehicle battery","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"batteryChemistry","label":"Battery chemistry","value":"Lithium ion NMC","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"internalCellResistance","label":"Internal cell resistance","value":"0.085","unit":"Ω","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"internalPackResistance","label":"Internal pack resistance","value":"0.085","unit":"Ω","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"originalPowerCapability","label":"Original power capability","value":"500,000","unit":"W","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"notInUseTemperatureRange","label":"Not in use temperature range","value":"−30 to 45 °C (temperature)","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"notInUseTemperatureRange.notInUseTemperatureRangeTest","label":"Not in use temperature range test","value":"Storage when not in use: -30 °C to +45 °C.","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null}]},{"id":"lifetime","title":"Lifetime & durability","icon":"timeline","rows":[{"key":"cycleLifeChargeCRate","label":"Cycle life charge C-rate","value":"1","unit":"1/h","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"cycleLifeReferenceTest","label":"Cycle life reference test","value":"Cycle-life test per IEC 62660-1 at 25 °C, 1C/1C, 100 % DoD until 70 % of rated capacity.","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"expectedLifetimeCycles","label":"Expected lifetime cycles","value":"3,000","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"capacityExhaustionThreshold","label":"Capacity exhaustion threshold","value":"70","unit":"%","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"initialRoundTripEnergyEfficiency","label":"Initial round trip energy efficiency","value":"95.5","unit":"%","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"roundTripEfficiencyAtHalfCycleLife","label":"Round trip efficiency at half cycle life","value":"93","unit":"%","href":null,"linkText":null,"note":null,"fullValue":null}]},{"id":"sustainability","title":"Sustainability & circularity","icon":"eco","rows":[{"key":"extinguishingAgent","label":"Extinguishing agent","value":"Large quantities of water for cooling; ABC dry powder only for small fires at an early stage.","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"hazardousSubstances","label":"Hazardous substances","value":"Lithium hexafluorophosphate (LiPF6) in electrolyte","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"criticalRawMaterials","label":"Critical raw materials","value":"Cobalt","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"renewableContentShare","label":"Renewable content share","value":"18.5","unit":"%","href":null,"linkText":null,"note":null,"fullValue":null},{"key":"separateCollectionSymbol","label":"Separate collection symbol","value":"Yes","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null},{"key":"wasteBatteryPreventionManagementInfo.batterySubstancesImpact","label":"Battery substances impact","value":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only.","unit":null,"href":null,"linkText":null,"note":"Also applies to: separate collection points, take back collection points, battery label symbol meaning, end user role in waste prevention, preparation for reuse facilities, waste battery safety instructions, end user role in separate collection, waste battery treatment facilities, preparation for repurposing facilities","fullValue":null}]},{"id":"documents","title":"Documents","icon":"description","rows":[{"key":"euDeclarationOfConformity","label":"EU declaration of conformity","value":"EU declaration of conformity (synthetic)","unit":"PDF","href":"https://energy.example.test/doc/EX-HV800-92-declaration.pdf","linkText":"EU declaration of conformity (synthetic)","note":null,"fullValue":null}]},{"id":"details","title":"Technical details","icon":"data_object","rows":[{"key":"contentSpecificationIds","label":"Content specification ids","value":"https://repository.product-passport.ec.europa.eu/core/1.0.0, https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0, https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/evb/1.0.0","unit":null,"href":null,"linkText":null,"note":null,"fullValue":null}]}],"attributeCount":46}</script>
+<script id="raw-data" type="application/json">{"dppStatus":"https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus","lastUpdate":"2026-11-19T07:44:33.833248Z","powerLimit":[{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt","value":250000,"valueRange":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius","lowerBound":-20,"upperBound":45,"observedCharacteristic":"https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature"}}],"granularity":"https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#item","batteryWeight":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram","value":486},"maximumVoltage":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt","value":806,"valueRange":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius","lowerBound":20,"upperBound":30,"observedCharacteristic":"https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature"}},"minimalVoltage":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt","value":576,"valueRange":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius","lowerBound":20,"upperBound":30,"observedCharacteristic":"https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature"}},"nominalVoltage":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt","value":710,"valueRange":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius","lowerBound":20,"upperBound":30,"observedCharacteristic":"https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature"}},"batteryCapacity":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour","value":130},"batteryCategory":"https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#electricVehicleBattery","batteryChemistry":["https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonNMC"],"manufacturingDate":"2026-09","extinguishingAgent":{"en-GB":"Large quantities of water for cooling; ABC dry powder only for small fires at an early stage."},"manufacturingPlace":{"manufacturingCity":"Example City","manufacturingCountry":"HRV"},"registrantIdentity":"Example Energy","hazardousSubstances":["Lithium hexafluorophosphate (LiPF6) in electrolyte"],"criticalRawMaterials":["https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#cobalt"],"cycleLifeChargeCRate":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#reciprocalHour","value":1},"batteryIdentification":{"productNumber":"EX-HV800-92"},"renewableContentShare":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent","value":18.5},"cycleLifeReferenceTest":{"en-GB":"Cycle-life test per IEC 62660-1 at 25 °C, 1C/1C, 100 % DoD until 70 % of rated capacity."},"expectedLifetimeCycles":3000,"internalCellResistance":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm","value":0.085},"internalPackResistance":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm","value":0.085},"contentSpecificationIds":["https://repository.product-passport.ec.europa.eu/core/1.0.0","https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0","https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/evb/1.0.0"],"originalPowerCapability":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt","value":500000},"uniqueProductIdentifier":"https://dpp.example.test/p/EV-0001","digitalProductPassportId":"urn:dpp:passport:426b27ea-b084-4239-9994-461a9a1a6f6d","notInUseTemperatureRange":{"valueRange":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius","lowerBound":-30,"upperBound":45,"observedCharacteristic":"https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature"},"notInUseTemperatureRangeTest":{"en-GB":"Storage when not in use: -30 °C to +45 °C."}},"separateCollectionSymbol":true,"euDeclarationOfConformity":{"url":"https://energy.example.test/doc/EX-HV800-92-declaration.pdf","language":"en-GB","contentType":"application/pdf","resourceTitle":"EU declaration of conformity (synthetic)"},"manufacturerPostalAddress":"1 Example Street, 00000 Example City, Croatia","manufacturerContactDetails":{"manufacturerWebsite":"https://energy.example.test/contact"},"manufacturerIdentification":{"manufacturerName":"Example Energy"},"capacityExhaustionThreshold":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent","value":70},"initialRoundTripEnergyEfficiency":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent","value":95.5},"roundTripEfficiencyAtHalfCycleLife":{"unit":"https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent","value":93},"wasteBatteryPreventionManagementInfo":{"batterySubstancesImpact":{"en-GB":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only."},"separateCollectionPoints":{"en-GB":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only."},"takeBackCollectionPoints":{"en-GB":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only."},"batteryLabelSymbolMeaning":{"en-GB":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only."},"endUserRoleInWastePrevention":{"en-GB":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only."},"preparationForReuseFacilities":{"en-GB":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only."},"wasteBatterySafetyInstructions":{"en-GB":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only."},"endUserRoleInSeparateCollection":{"en-GB":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only."},"wasteBatteryTreatmentFacilities":{"en-GB":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only."},"preparationForRepurposingFacilities":{"en-GB":"Do not dispose of this battery with household or general waste. Return it to an authorised Example Energy service partner or vehicle dealer free of charge; it is collected separately, prepared for reuse or repurposing where possible and otherwise recycled by a licensed treatment facility. Damaged batteries must be isolated and handled by trained staff only."}}}</script>
+<template id="qr-svg"><svg width="168" height="168" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31 31" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h31v31H0z"/><path stroke="#0f172a" d="M1 1.5h7m2 0h2m1 0h1m1 0h1m3 0h2m2 0h7M1 2.5h1m5 0h1m1 0h1m4 0h1m5 0h2m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m4 0h1m2 0h1m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m2 0h2m2 0h4m2 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m3 0h3m1 0h3m1 0h2m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 8.5h2m2 0h1m1 0h1m1 0h1M1 9.5h1m1 0h1m1 0h1m1 0h1m4 0h2m3 0h2m1 0h2m3 0h1m2 0h1M2 10.5h1m1 0h3m1 0h3m1 0h1m1 0h1m1 0h2m3 0h1m1 0h1m2 0h1m2 0h1M2 11.5h2m1 0h1m1 0h1m4 0h1m2 0h3m1 0h1m1 0h1m2 0h1m2 0h3M1 12.5h1m1 0h1m2 0h1m1 0h1m1 0h1m3 0h2m1 0h7m1 0h1m2 0h1M3 13.5h1m3 0h5m1 0h1m1 0h2m1 0h1m3 0h2m2 0h1m1 0h2M1 14.5h1m1 0h1m6 0h1m4 0h2m4 0h1m1 0h1m2 0h1m2 0h1M2 15.5h3m2 0h2m1 0h5m3 0h1m3 0h5m1 0h2M1 16.5h5m4 0h2m1 0h1m2 0h1m1 0h3m4 0h2m1 0h1M1 17.5h2m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h7m2 0h1m1 0h2M3 18.5h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h2m3 0h3m2 0h2m1 0h1M1 19.5h1m3 0h1m1 0h4m2 0h1m1 0h4m3 0h1m1 0h1m3 0h2M2 20.5h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h2m1 0h3m1 0h2m2 0h2m1 0h1M1 21.5h1m2 0h4m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m1 0h5M9 22.5h1m2 0h1m2 0h2m3 0h2m3 0h1m1 0h3M1 23.5h7m5 0h2m3 0h1m1 0h2m1 0h1m1 0h2m1 0h2M1 24.5h1m5 0h1m3 0h1m4 0h1m4 0h1m3 0h2m2 0h1M1 25.5h1m1 0h3m1 0h1m1 0h3m5 0h1m3 0h5M1 26.5h1m1 0h3m1 0h1m3 0h2m1 0h1m1 0h3m1 0h2m2 0h2m1 0h1M1 27.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h2m1 0h2m3 0h3m2 0h1M1 28.5h1m5 0h1m2 0h1m2 0h1m1 0h1m1 0h8m3 0h1M1 29.5h7m1 0h3m1 0h1m2 0h1m2 0h1m1 0h1m2 0h3m1 0h2"/></svg>
+</template>
+<script>
+(function () {
+  var SHARE_URL = "https://tomozulj.github.io/";
+  var d = JSON.parse(document.getElementById('dpp-data').textContent);
+  var raw = document.getElementById('raw-data').textContent;
+  var app = document.getElementById('app');
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function icon(name, cls) { return el('span', 'ms' + (cls ? ' ' + cls : ''), name); }
+  function add(parent) { for (var i = 1; i < arguments.length; i++) if (arguments[i]) parent.appendChild(arguments[i]); return parent; }
+  function link(href, text) {
+    var a = el('a', null, text); a.href = href; a.target = '_blank'; a.rel = 'noopener'; return a;
+  }
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function fmt(iso) {
+    var t = new Date(iso); if (isNaN(t)) return iso;
+    var p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return t.getDate() + ' ' + MON[t.getMonth()] + ' ' + t.getFullYear() + ', ' + p(t.getHours()) + ':' + p(t.getMinutes());
+  }
+  var blobUrl = URL.createObjectURL(new Blob([raw], { type: 'application/json' }));
+
+  // header card
+  var head = el('section', 'card head');
+  var row = el('div', 'row');
+  var logo = el('span', 'logo'); logo.appendChild(icon('battery_charging_full'));
+  var info = el('div'); info.style.minWidth = 0; info.style.flex = '1';
+  add(info, el('h1', null, d.title));
+  if (d.serial) info.appendChild(el('p', 'serial', d.serial));
+  var badge = el('span', 'badge' + (d.status === 'invalid' ? ' invalid' : ''));
+  add(badge, icon(d.status === 'valid' ? 'verified' : d.status === 'invalid' ? 'error' : 'help'), document.createTextNode(d.statusLabel));
+  info.appendChild(badge);
+  add(row, logo, info);
+  var meta = el('dl', 'meta');
+  function metaItem(label, value, mono) {
+    var w = el('div'); var dd = el('dd', mono ? 'mono' : null, value);
+    add(w, el('dt', null, label), dd); meta.appendChild(w);
+  }
+  if (d.operator) metaItem(d.operatorLabel, d.operator);
+  metaItem('Passport ID', d.upi, true);
+  if (d.lastUpdated) metaItem('Last updated', fmt(d.lastUpdated));
+  add(head, row, meta);
+
+  // groups
+  var groups = el('div', 'groups');
+  d.groups.forEach(function (g) {
+    if (g.id === 'details') {
+      var det = el('details', 'card');
+      var sum = el('summary'); add(sum, icon(g.icon), document.createTextNode(g.title));
+      det.appendChild(sum);
+      g.rows.forEach(function (r) {
+        var c = el('div', 'det');
+        if (r.href) c.appendChild(link(r.href, r.linkText)); else c.textContent = r.value;
+        det.appendChild(c);
+      });
+      var m = el('div', 'det'); m.appendChild(link(blobUrl, 'Machine-readable data (JSON)'));
+      det.appendChild(m); groups.appendChild(det);
+      return;
+    }
+    var sec = el('section', 'card grp');
+    var h = el('h2'); add(h, icon(g.icon), document.createTextNode(g.title));
+    var dl = el('dl');
+    g.rows.forEach(function (r) {
+      var kv = el('div', 'kv');
+      var dd = el('dd', 'v'); dd.style.margin = 0;
+      if (r.href) dd.appendChild(link(r.href, r.linkText)); else dd.appendChild(document.createTextNode(r.value));
+      if (r.unit) dd.appendChild(el('span', 'u', '\u00a0' + (r.href ? '· ' : '') + r.unit));
+      if (r.note) dd.appendChild(el('span', 'n', r.note));
+      if (r.fullValue) dd.appendChild(el('span', 'f', r.fullValue));
+      add(kv, el('dt', 'k', r.label), dd); dl.appendChild(kv);
+    });
+    add(sec, h, dl); groups.appendChild(sec);
+  });
+  if (!d.groups.length) groups.appendChild(el('div', 'card head', 'This passport has no public data to show.'));
+
+  // QR + identifier
+  var share = el('section', 'card share');
+  var h2 = el('h2'); add(h2, icon('qr_code_2'), document.createTextNode('Passport QR & identifier'));
+  var qr = el('div', 'qr'); var box = el('div', 'box');
+  box.innerHTML = document.getElementById('qr-svg').innerHTML; // static, generated at build time
+  box.setAttribute('role', 'img'); box.setAttribute('aria-label', 'QR code for ' + SHARE_URL);
+  qr.appendChild(box);
+  var sdl = el('dl'); var w = el('div');
+  add(w, el('dt', null, 'Product identifier'), el('dd', 'mono', d.upi), el('dd', 'sub', SHARE_URL));
+  sdl.appendChild(w);
+  if (d.dppId) { var w2 = el('div'); var dd2 = el('dd', 'mono', d.dppIdShort); dd2.title = d.dppId; add(w2, el('dt', null, 'Passport reference'), dd2); sdl.appendChild(w2); }
+  var btn = el('a', 'btn'); btn.href = blobUrl; btn.target = '_blank'; btn.rel = 'noopener';
+  add(btn, icon('data_object'), document.createTextNode('Machine-readable data'));
+  add(share, h2, qr, sdl, btn);
+
+  var layout = el('div', 'layout');
+  var aside = el('aside'); aside.appendChild(share);
+  add(layout, groups, aside);
+
+  add(app, head, layout,
+    el('p', 'foot', 'Public information only. Restricted data is available to authorised parties after sign-in.'),
+    el('p', 'foot demo', 'Demo page with synthetic example data.'));
+})();
+</script>
+</body>
+</html>
